@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHEVIT</title>
+    <style>
+        body  {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        nav {
+            width: 100%;
+            background-color: #343a40; 
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #212529; 
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+        }
+
+        nav a.navbar-brand {
+            font-size: 20px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .toggle-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .toggle-link a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .toggle-link a:hover {
+            text-decoration: underline;
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- เมนูนำทาง -->
+    <nav>
+        <a class="navbar-brand" href="#">CHEVIT</a>
+    </nav>
+
+    <div class="container">
+        <!-- ฟอร์มการล็อกอิน -->
+        <div id="loginForm" class="form-container active">
+            <h2>Login</h2>
+            <form id="loginFormElement" onsubmit="return loginUser(event)">
+                <div class="form-group">
+                    <label for="loginUsername">Username</label>
+                    <input type="text" id="loginUsername" name="loginUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" name="loginPassword" required>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Login">
+                </div>
+                <div id="loginError" class="error"></div>
+            </form>
+            <div class="toggle-link">
+                <p>คุณยังไม่มีบัญชี? <a href="#" onclick="toggleForm()">Register here</a></p>
+            </div>
+        </div>
+
+        <!-- ฟอร์มการลงทะเบียนสมาชิกใหม่ -->
+        <div id="registerForm" class="form-container">
+            <h2>Register as New Member</h2>
+            <form id="registerFormElement" onsubmit="return registerUser(event)">
+                <div class="form-group">
+                    <label for="registerUsername">Username</label>
+                    <input type="text" id="registerUsername" name="registerUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" name="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" name="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Confirm Password</label>
+                    <input type="password" id="registerConfirmPassword" name="registerConfirmPassword" required>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Register">
+                </div>
+                <div id="registerError" class="error"></div>
+            </form>
+            <div class="toggle-link">
+                <p>คุณมีบัญชีแล้ว? <a href="#" onclick="toggleForm()">Login here</a></p>
+            </div>
+        </div>
+    </div> 
+
+    <script>
+        // ฟังก์ชันสำหรับการสลับฟอร์มระหว่างล็อกอินและลงทะเบียน
+        function toggleForm() {
+            var loginForm = document.getElementById('loginForm');
+            var registerForm = document.getElementById('registerForm');
+            loginForm.classList.toggle('active');
+            registerForm.classList.toggle('active');
+            document.getElementById('registerError').innerText = '';
+            document.getElementById('loginError').innerText = '';
+        }
+
+        // ฟังก์ชันการลงทะเบียน
+        function registerUser(event) {
+            event.preventDefault();
+            var username = document.getElementById('registerUsername').value;
+            var email = document.getElementById('registerEmail').value;
+            var password = document.getElementById('registerPassword').value;
+            var confirmPassword = document.getElementById('registerConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                document.getElementById('registerError').innerText = 'Passwords do not match!';
+                return false;
+            }
+
+            var user = {
+                username: username,
+                email: email,
+                password: password
+            };
+
+            localStorage.setItem('user', JSON.stringify(user));
+            alert('Registration successful! Please login.');
+            toggleForm(); 
+            return true;
+        }
+
+        // ฟังก์ชันการล็อกอิน
+        function loginUser(event) {
+            event.preventDefault();
+            var loginUsername = document.getElementById('loginUsername').value;
+            var loginPassword = document.getElementById('loginPassword').value;
+
+            var storedUser = JSON.parse(localStorage.getItem('user'));
+
+            if (!storedUser) {
+                document.getElementById('loginError').innerText = 'No registered user found. Please register first.';
+                return false;
+            }
+
+            if (loginUsername === storedUser.username && loginPassword === storedUser.password) {
+                alert('Login successful!');
+
+                // เก็บชื่อผู้ใช้ใน localStorage
+                localStorage.setItem('loggedInUser', loginUsername);
+
+                // ไปยังหน้าใหม่
+                window.location.href = "file:///C:/Users/Lenovo/Downloads/html,dd%E0%B8%81.html#settings"; // ใส่ลิงก์ไปยังหน้าใหม่
+                return true;
+            } else {
+                document.getElementById('loginError').innerText = 'Invalid username or password.';
+                return false;
+            }
+        }
+
+        // ตรวจสอบสถานะล็อกอินเมื่อโหลดหน้าใหม่
+        document.addEventListener("DOMContentLoaded", function () {
+            var loggedInUser = localStorage.getItem('loggedInUser');
+            if (!loggedInUser) {
+                alert("กรุณาเข้าสู่ระบบก่อน!");
+                window.location.href = "index.html";
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+

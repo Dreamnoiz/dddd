@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHEVIT - Smooth Scroll</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ทำให้การเลื่อนแบบ smooth */
+        html {
+            scroll-behavior: smooth;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4; /* สีพื้นหลังของทั้งเว็บเป็นสีเทาอ่อน */
+        }
+
+        /* สไตล์สำหรับ header */
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            height: 20vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        /* สไตล์สำหรับ nav */
+        nav {
+            background-color: #444;
+            overflow: hidden;
+            padding: 12px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            top: 0;
+            width: 100%;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            font-size: 16px;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background-color: #575757;
+            transform: scale(1.1);
+            border-radius: 5px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* สไตล์สำหรับแต่ละ section */
+        section {
+            padding: 40px 20px;
+            text-align: left;
+            height: auto;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 80px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: transparent;
+            opacity: 0; /* เริ่มต้นให้หายไป */
+            transform: translateY(50px); /* เริ่มต้นให้เลื่อนขึ้นจากด้านล่าง */
+            animation: slideUp 1s forwards; /* สร้างการเคลื่อนไหว */
+        }
+
+        /* สไตล์สำหรับหัวข้อใน section */
+        section h1 {
+            font-size: 26px;
+            margin-bottom: 15px;
+            color: #444;
+            font-weight: 600;
+        }
+
+        /* สไตล์สำหรับข้อความใน section */
+        section p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 20px;
+        }
+
+        footer p {
+            font-size: 14px;
+        }
+
+        /* Keyframes สำหรับการเลื่อนขึ้น */
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* แก้ไขการเลื่อน section แต่ละตัวให้มีเวลาหน่วงแตกต่างกัน */
+        #home {
+            animation: slideUp 1s forwards;
+        }
+        #about {
+            animation: slideUp 1s 0.3s forwards; /* เพิ่มการหน่วงเวลา */
+        }
+        #services {
+            animation: slideUp 1s 0.6s forwards; /* เพิ่มการหน่วงเวลา */
+        }
+        #contact {
+            animation: slideUp 1s 0.9s forwards; /* เพิ่มการหน่วงเวลา */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        CHEVIT
+    </header>
+
+    <!-- เมนูนำทาง -->
+    <nav>
+        <a href="#home">หน้าแรก</a>
+        <a href="#about">ค่าแสดงผล</a>
+        <a href="#services">บริการ</a>
+        <a href="#contact">ติดต่อ</a>
+    </nav>
+
+    <!-- ส่วนของเนื้อหา -->
+    <section id="home">
+        <h1>หน้าแรก</h1>
+        <p>ยินดีต้อนรับเข้าสู่เว็บไซต์ของเรา! ทุกข้อมูลที่คุณต้องการเริ่มต้นที่นี่</p>
+    </section>
+
+    <section id="about">
+        <h1>ค่าแสดงผล</h1>
+        <p>ข้อมูลเกี่ยวกับค่าแสดงผลที่ได้จากเซ็นเซอร์ สามารถเข้าใจได้ง่ายๆ ที่นี่</p>
+    </section>
+
+    <section id="services">
+        <h1>บริการ</h1>
+        <p>บริการที่เราให้สำหรับลูกค้าทุกท่าน เช่น การเชื่อมต่อและบริการอื่นๆ ที่พร้อมให้บริการทุกวัน</p>
+    </section>
+
+    <section id="contact">
+        <h1>ติดต่อ</h1>
+        <p>ข้อมูลการติดต่อเรา. หากคุณต้องการข้อมูลเพิ่มเติม หรือสนใจบริการของเรา สามารถติดต่อได้ที่นี่</p>
+    </section>
+
+    <footer>
+        <p>&copy; Benchamarachuthit Chanthaburi | All Rights Reserved</p>
+    </footer>
+
+</body>
+</html>
